@@ -2,6 +2,7 @@
 Utilities to steamline common sagemaker setup tasks.
 """
 
+import numpy as np
 import boto3
 import sagemaker
 
