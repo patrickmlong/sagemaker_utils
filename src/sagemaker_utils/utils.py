@@ -39,6 +39,6 @@ def create_record_set(model, X, y, supervised: bool = True):
     X_float = X.astype("float32")
     if supervised:
         y_float = y.astype("float32")
-        rs = model.record_set(X_float, labels = y_float)
-    rs = model.record_set(X_float)
-    return rs
+        return  model.record_set(X_float, labels = y_float)
+    else:
+        return model.record_set(X_float)
