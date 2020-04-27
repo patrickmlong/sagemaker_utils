@@ -28,7 +28,17 @@ def fit_deploy(model, data, instance_count: int = 1, instance_type = "ml.t2.medi
     deployed_model = model.deploy(initial_instance_count = instance_count,instance_type = instance_type)
     return deployed_model
 
+
 def s3_path(bucket, prefix):
     """Returns a formatted S3 bucket output path"""
     return f"s3://{bucket}/{prefix}"
 
+
+def create_record_set(model, X, y, supervised: bool = True):
+    """Create a record set for AWS model training"""
+    X_float = X.astype("float32")
+    if supervised:
+        y_float = y.astype("float32")
+        rs = model.record_set(X_float, labels = y_float)
+    rs = model.record_set(X_float)
+    return rs
