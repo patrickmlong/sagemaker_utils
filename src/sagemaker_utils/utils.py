@@ -3,6 +3,7 @@ Utilities to steamline common sagemaker setup tasks.
 """
 
 import numpy as np
+import logging
 import boto3
 import sagemaker
 
@@ -43,3 +44,12 @@ def create_record_set(model, X, y, supervised: bool = True):
         return  model.record_set(X_float, labels = y_float)
     else:
         return model.record_set(X_float)
+
+
+def delete_endpoint(endpoint_name):
+    """Delete AWS Sagemaker endpoint"""
+    try:
+        boto3.client("sagemaker").delete_endpoint(EndpointName = endpoint_name)
+        logging.info(f"Endpoint: {endpoint_name} deleted")
+    except:
+        logging.info("Endpoint: {endpoint_name} previously deleted")
