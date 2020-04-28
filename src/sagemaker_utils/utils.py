@@ -1,5 +1,5 @@
 """
-Utilities to steamline common sagemaker setup tasks.
+Utilities to steamline common AWS sagemaker setup tasks.
 """
 
 import numpy as np
@@ -36,18 +36,18 @@ def s3_path(bucket, prefix):
     return f"s3://{bucket}/{prefix}"
 
 
-def create_record_set(model, X, y, supervised: bool = True):
+def create_record_set(model, X, y):
     """Create a record set for AWS model training"""
     X_float = X.astype("float32")
-    if supervised:
+    if y:
         y_float = y.astype("float32")
         return  model.record_set(X_float, labels = y_float)
     else:
         return model.record_set(X_float)
 
 
-def delete_endpoint(endpoint_name):
-    """Delete AWS Sagemaker endpoint"""
+def remove_endpoint(endpoint_name):
+    """Remove AWS Sagemaker endpoint"""
     try:
         boto3.client("sagemaker").delete_endpoint(EndpointName = endpoint_name)
         logging.info(f"Endpoint: {endpoint_name} deleted")
