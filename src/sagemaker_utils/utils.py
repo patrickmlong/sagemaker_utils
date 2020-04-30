@@ -9,7 +9,7 @@ import sagemaker
 
 
 def get_credentials():
-    """Retrieve and return basic sagemaker credentils: session, role, S3 bucket"""
+    """Retrieve and return sagemaker credentials: session, role, S3 bucket"""
     sage_session = sagemaker.Session()
     role = sagemaker.get_execution_role()
     bucket = sage_session.default_bucket()
@@ -61,14 +61,14 @@ def my_aws_region():
 
 
 def make_s3_bucket(s3_resource, name):
-    """"Create an S3 bucket with a user defined bucket name
+    """"Create an s3 bucket with a user defined bucket name
     Args:
-         s3_resource: AWS s3 client connection e.g. boto3.resource("s3")
+         s3_resource: AWS s3 client connection i.e. boto3.resource("s3")
          name: unique name for your aws bucket
     Return:
         AWS s3 bucket
     """
     s3_bucket = s3_resource.createBucket(name,
     CreateBucketConfiguration = {"LocationConstraint": my_aws_region()})
-    logging.info("S3 bucket created")
+    logging.info("s3 bucket created")
     return s3_bucket
