@@ -53,3 +53,22 @@ def remove_endpoint(endpoint_name):
         logging.info(f"Endpoint: {endpoint_name} deleted")
     except:
         logging.info("Endpoint: {endpoint_name} previously deleted")
+
+
+def my_aws_region():
+    """"Return your AWS region"""
+    return boto3.session.Session().region_name
+
+
+def make_s3_bucket(s3_resource, name):
+    """"Create an S3 bucket with a user defined bucket name
+    Args:
+         s3_resource: AWS s3 client connection e.g. boto3.resource("s3")
+         name: unique name for your aws bucket
+    Return:
+        AWS s3 bucket
+    """
+    s3_bucket = s3_resource.createBucket(name,
+    CreateBucketConfiguration = {"LocationConstraint": my_aws_region()})
+    logging.info("S3 bucket created")
+    return s3_bucket
